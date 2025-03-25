@@ -47,7 +47,7 @@ st.write("Enter a GDPR violation summary to predict the likely violated article 
 
 user_input = st.text_area("Enter GDPR Violation Summary:")
 
-if st.button("Predict"):
+if st.button("Check"):
     if user_input:
         user_input_vectorized = vectorizer.transform([user_input])
         predicted_article = article_model.predict(user_input_vectorized)
