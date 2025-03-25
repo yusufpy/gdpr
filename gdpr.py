@@ -43,7 +43,7 @@ risk_model.fit(X_train, y_train_risk)
 
 # Streamlit App
 st.title("GDPR Violation Risk Assessment")
-st.write("Enter a GDPR violation summary to predict the likely violated article and risk level.")
+st.write("Enter a GDPR violation summary to check the likely violated article and risk level.")
 
 user_input = st.text_area("Enter GDPR Violation Summary:")
 
