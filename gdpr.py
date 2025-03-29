@@ -106,8 +106,8 @@ data["article_violated_encoded"] = article_encoder.fit_transform(data["article_v
 
 # Risk Assessment Function
 def risk_assessment(article):
-    high_risk = ["Art. 5 GDPR", "Art. 6 GDPR", "Art. 32 GDPR"]
-    medium_risk = ["Art. 12 GDPR", "Art. 13 GDPR", "Art. 31 GDPR"]
+    high_risk = ["Art. 5 GDPR", "Art. 6 GDPR", "Art. 32 GDPR"," Art. 45 GDPR"," Art. 10 GDPR"," Art. 16 GDPR"]
+    medium_risk = ["Art. 12 GDPR", "Art. 13 GDPR", "Art. 31 GDPR"," Art. 8 GDPR"]
     return "High" if article in high_risk else "Medium" if article in medium_risk else "Low"
 
 data["risk_level"] = data["article_violated"].apply(risk_assessment)
