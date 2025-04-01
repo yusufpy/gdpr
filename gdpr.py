@@ -97,8 +97,16 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 
-# Load Data
-data = pd.read_csv("gdpr_violations_expanded.csv")
+data = pd.read_csv('gdpr_violations.csv')
+additional_data=pd.read_csv('/content/gdpr_violations_additional.csv')
+data=data[['article_violated','summary']]
+data=pd.concat([data,additional_data])
+
+data['article_violated'] = data['article_violated'].str.replace(r'\(1\)', '', regex=True)
+data['article_violated'] = data['article_violated'].str.replace(r'\(2\)', '', regex=True)
+data['article_violated'] = data['article_violated'].str.replace(r'\(3\)', '', regex=True)
+data['article_violated'] = data['article_violated'].str.replace(r'\(4\)', '', regex=True)
+data['article_violated'] = data['article_violated'].str.replace(r'\(5\)', '', regex=True)
 
 # Encode 'article_violated' using LabelEncoder
 article_encoder = LabelEncoder()
@@ -106,9 +114,30 @@ data["article_violated_encoded"] = article_encoder.fit_transform(data["article_v
 
 # Risk Assessment Function
 def risk_assessment(article):
-    high_risk = ["Art. 5 GDPR", "Art. 6 GDPR", "Art. 32 GDPR"," Art. 45 GDPR"," Art. 10 GDPR"," Art. 16 GDPR"]
-    medium_risk = ["Art. 12 GDPR", "Art. 13 GDPR", "Art. 31 GDPR"," Art. 8 GDPR"]
-    return "High" if article in high_risk else "Medium" if article in medium_risk else "Low"
+    high_risk = {
+        "Art. 5 GDPR", "Art. 6 GDPR", "Art. 7 GDPR", "Art. 9 GDPR", "Art. 10 GDPR",
+        "Art. 17 GDPR", "Art. 22 GDPR", "Art. 33 GDPR", "Art. 44 GDPR", "Art. 45 GDPR",
+        "Art. 46 GDPR", "Art. 83 GDPR"
+    }
+
+    medium_risk = {
+        "Art. 8 GDPR", "Art. 12 GDPR", "Art. 13 GDPR", "Art. 14 GDPR", "Art. 15 GDPR",
+        "Art. 18 GDPR", "Art. 19 GDPR", "Art. 20 GDPR", "Art. 23 GDPR", "Art. 35 GDPR"
+    }
+
+    low_risk = {
+        "Art. 11 GDPR", "Art. 16 GDPR", "Art. 21 GDPR", "Art. 37 GDPR", "Art. 43 GDPR"
+    }
+
+    if article in high_risk:
+        return "High"
+    elif article in medium_risk:
+        return "Medium"
+    elif article in low_risk:
+        return "Low"
+    else:
+        return "High"  # If the article is not in the predefined list
+
 
 data["risk_level"] = data["article_violated"].apply(risk_assessment)
 
