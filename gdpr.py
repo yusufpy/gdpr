@@ -98,7 +98,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
 
 data = pd.read_csv('gdpr_violations.csv')
-additional_data=pd.read_csv('/content/gdpr_violations_additional.csv')
+additional_data=pd.read_csv('gdpr_violations_additional.csv')
 data=data[['article_violated','summary']]
 data=pd.concat([data,additional_data])
 
