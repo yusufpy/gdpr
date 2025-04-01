@@ -108,10 +108,10 @@ data['article_violated'] = data['article_violated'].str.replace(r'\(3\)', '', re
 data['article_violated'] = data['article_violated'].str.replace(r'\(4\)', '', regex=True)
 data['article_violated'] = data['article_violated'].str.replace(r'\(5\)', '', regex=True)
 
+data['article_violated'] = data['article_violated'].map({'Art. 5 (1) e) GDPR|Art. 5 (2) GDPR':'Art. 5 (1) e) GDPR|Art. 5 (2) GDPR','Art. 18 GDPR':'Art. 18 GDPR'})
 # Encode 'article_violated' using LabelEncoder
 article_encoder = LabelEncoder()
 data["article_violated_encoded"] = article_encoder.fit_transform(data["article_violated"])
-data['article_violated'] = data['article_violated'].map({'Art. 5 (1) e) GDPR|Art. 5 (2) GDPR':'Art. 5 (1) e) GDPR|Art. 5 (2) GDPR','Art. 18 GDPR':'Art. 18 GDPR'})
 # Risk Assessment Function
 def risk_assessment(article):
     high_risk = {
